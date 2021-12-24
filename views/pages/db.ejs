@@ -2,6 +2,15 @@
 <html>
 <head>
   <%- include ("../partials/header.ejs") %>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+    table {
+      border-spacing: 15px;
+    }
+    </style>
 </head>
 
 <body>
@@ -10,12 +19,20 @@
 
 <div class="container">
 <h2>Database Results</h2>
-
-<ul>
+<table>
+    <tr>
+        <th>Date</th><th>Name</th><th>Score</th><th>WUs</th><th>Rank</th>
+    </tr>
     <% results.forEach(function(r) { %>
-        <li><%= r.id %> - <%= r.name %></li>
+    <tr>
+        <td><%= r.date.getFullYear() %>-<%= r.date.getMonth() + 1 %>-<%= r.date.getDate() %></td>
+        <td><%= r.name %></td>
+        <td><%= r.score %></td>
+        <td><%= r.wus %></td>
+        <td><%= r.rank %></td>
+    </tr>
     <% }); %>
-</ul>
+</table>
 
 </div>
 
