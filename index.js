@@ -16,7 +16,7 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/', (req, res) => res.redirect('/db'))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
@@ -29,12 +29,12 @@ express()
       res.send("Error " + err);
     }
   })
-  .get('/update', async (req, res) => {
+  .get('/update/:username', async (req, res) => {
     try {
       const client = await pool.connect();
       const countFetch = await fetch('https://api.foldingathome.org/user-count');
       const count = await countFetch.text();
-      const response = await fetch(`https://api.foldingathome.org/user/${username}`);
+      const response = await fetch(`https://api.foldingathome.org/user/${req.params.username}`);
       const userInfo = await response.json();
       let d = new Date();
       let currentDate = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
